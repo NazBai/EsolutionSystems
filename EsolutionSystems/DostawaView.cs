@@ -1,21 +1,14 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
     public partial class DostawaView : Form
     {
-        public Rezerwacja rezerwacja;
-        public DostawaView(Rezerwacja rezerwacja)
+        private Rezerwacja rezerwacja;
+        private RezerwacjaConfirmationView rezerwacjaConfirmation;
+        public DostawaView(Rezerwacja rezerwacja, RezerwacjaConfirmationView rezerwacjaConfirmation)
         {
+            this.rezerwacjaConfirmation = rezerwacjaConfirmation;
             this.rezerwacja = rezerwacja;
             InitializeComponent();
         }
@@ -28,8 +21,19 @@ namespace EsolutionSystems
         private void DostawaOKButton_Click(object sender, EventArgs e)
         {
             rezerwacja.addDostawa(adresTextBox.Text);
-            new PaymantDialogView(rezerwacja).Show();
+            new PaymantDialogView(rezerwacja, this).Show();
             this.Hide();
+        }
+
+        private void DostawaCancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            rezerwacjaConfirmation.Show();
+        }
+
+        private void DostawaView_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

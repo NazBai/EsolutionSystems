@@ -1,35 +1,30 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EsolutionSystems.Items
 {
     [Serializable]
     public class Klient : Osoba
     {
-        public List<Zakup> Zakupy { get; set; }
-        public static List<Klient> AllKlients { get; set; } = new List<Klient>();
-        public List<Rezerwacja> Rezerwacje { get; set; } = new List<Rezerwacja>();
+        public List<Zakup> zakupy { get; set; }
+        public static List<Klient> allKlients { get; set; } = new List<Klient>();
+        public List<Rezerwacja> rezerwacje { get; set; } = new List<Rezerwacja>();
         public Klient(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber) : base(Name, Surname, DateOfBirth, PhoneNumber)
         {
-            AllKlients.Add(this);
+            allKlients.Add(this);
         }
 
         public Klient(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, string Sex) : base(Name, Surname, DateOfBirth, PhoneNumber, Sex)
         {
-            AllKlients.Add(this);
+            allKlients.Add(this);
         }
 
         public override int GetAge()
         {
             DateTime today = DateTime.Today;
-            int age = today.Year - DateOfBirth.Year;
+            int age = today.Year - dateOfBirth.Year;
 
-            if (DateOfBirth.Date > today.AddYears(-age))
+            if (dateOfBirth.Date > today.AddYears(-age))
                 age--;
 
             return age;
@@ -37,24 +32,25 @@ namespace EsolutionSystems.Items
 
         public void AddZakup(Zakup Zakup)
         {
-            if (!Zakupy.Contains(Zakup))
+            if (!zakupy.Contains(Zakup))
             {
-                Zakupy.Add(Zakup);
-                Zakup.Klient = this;
+                zakupy.Add(Zakup);
+                Zakup.klient = this;
             }
         }
 
-        public void AddRezerwacja(Rezerwacja Rezerwacja)
+        public void AddRezerwacja(Rezerwacja rezerwacja)
         {
-            if (!Rezerwacje.Contains(Rezerwacja))
+            if (!rezerwacje.Contains(rezerwacja))
             {
-                Rezerwacje.Add(Rezerwacja);
-                Rezerwacja.Klient = this;
+                rezerwacje.Add(rezerwacja);
+                rezerwacja.klient = this;
             }
         }
 
         public static void Save()
         {
+
             try
             {
                 string solutionDir = AppDomain.CurrentDomain.BaseDirectory;
@@ -65,13 +61,13 @@ namespace EsolutionSystems.Items
 #pragma warning restore SYSLIB0011 // Type or member is obsolete
                 using (FileStream stream = new FileStream(filePath, FileMode.Create))
                 {
-                    formatter.Serialize(stream, AllKlients);
+                    formatter.Serialize(stream, allKlients);
                 }
-                Console.WriteLine("Data saved successfully.");
+                Debug.WriteLine("Data saved successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving data: {ex.Message}");
+                Debug.WriteLine($"Error saving data: {ex.Message}");
             }
         }
 
@@ -92,16 +88,16 @@ namespace EsolutionSystems.Items
                     {
                         loadedData = (List<Klient>)formatter.Deserialize(stream);
                     }
-                    Console.WriteLine("Data loaded successfully.");
+                    Debug.WriteLine("Data loaded successfully.");
                 }
                 else
                 {
-                    Console.WriteLine("File not found. No data loaded.");
+                    Debug.WriteLine("File not found. No data loaded.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading data: {ex.Message}");
+                Debug.WriteLine($"Error loading data: {ex.Message}");
             }
             return loadedData;
         }

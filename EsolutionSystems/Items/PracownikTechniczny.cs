@@ -1,37 +1,33 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
     [Serializable]
     public class PracownikTechniczny : Pracownik
     {
-        public string SkillsDescription { get; set; }
-        public MagazynSklep WorkingPlace;
-        public List<Naprawa> Naprawy { get; set; }
-        public PracownikTechniczny(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, int Salary, int YearsOfYearsOfExpiriance, string SkillsDescription, MagazynSklep WorkingPlace) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber, Salary, YearsOfYearsOfExpiriance)
+        public string skillsDescription { get; set; }
+        public MagazynSklep workingplace;
+        public List<Naprawa> naprawy { get; set; }
+        public PracownikTechniczny(string name, string surname, DateTime dateOfBirth, string phoneNumber, int salary, int yearsOfYearsOfExpiriance, string skillsDescription, MagazynSklep workingplace) 
+            : base(name, surname, dateOfBirth, phoneNumber, salary, yearsOfYearsOfExpiriance)
         {
-            this.WorkingPlace = WorkingPlace;
-            this.SkillsDescription = SkillsDescription;
+            this.workingplace = workingplace;
+            this.skillsDescription = skillsDescription;
         }
 
-        public PracownikTechniczny(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, string Sex, int Salary, int YearsOfYearsOfExpiriance, string SkillsDescription, MagazynSklep WorkingPlace) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber, Sex, Salary, YearsOfYearsOfExpiriance)
+        public PracownikTechniczny(string name, string surname, DateTime dateOfBirth, string phoneNumber, string sex, int salary, int yearsOfYearsOfExpiriance, string skillsDescription, MagazynSklep workingplace) 
+            : base(name, surname, dateOfBirth, phoneNumber, sex, salary, yearsOfYearsOfExpiriance)
         {
-            this.WorkingPlace = WorkingPlace;
-            this.SkillsDescription = SkillsDescription;
+            this.workingplace = workingplace;
+            this.skillsDescription = skillsDescription;
         }
 
-        public void AddNaprawa(Naprawa Naprawa)
+        public void AddNaprawa(Naprawa naprawa)
         {
-            if (!Naprawy.Contains(Naprawa))
+            if (!naprawy.Contains(naprawa))
             {
-                Naprawy.Add(Naprawa);
-                Naprawa.AddPracownikTechniczny(this);
+                naprawy.Add(naprawa);
+                naprawa.AddPracownikTechniczny(this);
             }
         }
 
@@ -39,9 +35,9 @@ namespace EsolutionSystems.Items
         {
 
             DateTime today = DateTime.Today;
-            int age = today.Year - DateOfBirth.Year;
+            int age = today.Year - dateOfBirth.Year;
 
-            if (DateOfBirth.Date > today.AddYears(-age))
+            if (dateOfBirth.Date > today.AddYears(-age))
                 age--;
 
             return age;
@@ -50,7 +46,7 @@ namespace EsolutionSystems.Items
 
         public override bool IsExpiriensed()
         {
-            return YearsOfExpiriance >= 3;
+            return yearsOfExpiriance >= 3;
         }
     }
 }

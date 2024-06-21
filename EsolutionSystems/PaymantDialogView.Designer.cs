@@ -32,12 +32,14 @@
             NoPaymentButton = new Button();
             YesPaymentButton = new Button();
             label1 = new Label();
+            PowrotButton = new Button();
             panel1.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
             // 
             panel1.BackColor = Color.FromArgb(56, 182, 255);
+            panel1.Controls.Add(PowrotButton);
             panel1.Controls.Add(NoPaymentButton);
             panel1.Controls.Add(YesPaymentButton);
             panel1.Controls.Add(label1);
@@ -77,6 +79,16 @@
             label1.TabIndex = 0;
             label1.Text = "Czy chcesz dokonsć płatności teraz?";
             // 
+            // PowrotButton
+            // 
+            PowrotButton.Location = new Point(448, 200);
+            PowrotButton.Name = "PowrotButton";
+            PowrotButton.Size = new Size(175, 83);
+            PowrotButton.TabIndex = 3;
+            PowrotButton.Text = "Powrót";
+            PowrotButton.UseVisualStyleBackColor = true;
+            PowrotButton.Click += PowrotButton_Click;
+            // 
             // PaymantDialogView
             // 
             AutoScaleDimensions = new SizeF(15F, 37F);
@@ -96,5 +108,6 @@
         private Button NoPaymentButton;
         private Button YesPaymentButton;
         private Label label1;
+        private Button PowrotButton;
     }
 }

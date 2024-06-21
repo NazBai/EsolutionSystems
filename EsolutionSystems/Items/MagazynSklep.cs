@@ -1,14 +1,7 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Xml;
-using System.IO;
-using Formatting = Newtonsoft.Json.Formatting;
+﻿
+using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Xml.Serialization;
+
 
 
 namespace EsolutionSystems.Items
@@ -22,18 +15,18 @@ namespace EsolutionSystems.Items
             Magazyn,
             Sklep
         }
-        public List<TypPomieszczenia> TypyPomieszczenia { get; set; } = new List<TypPomieszczenia>();
-        public string Name { get; set; }
-        public string Adres { get; set; }
-        public int Area { get; set; }
-        public List<string> MashineryNames { get; set; } = new List<string>();
-        public List<Magazynier> Magazynierzy { get; set; } = new List<Magazynier>();
-        public List<Sprzedawca> Sprzedawcy { get; set; } = new List<Sprzedawca>();
-        public List<Naprawa> Naprawy { get; set; } = new List<Naprawa>();
-        public List<Towar> Towary { get; set; } = new List<Towar>();
-        public List<PracownikTechniczny> PracownicyTechniczni { get; set; } = new List<PracownikTechniczny>();
-        public List<Zakup> Zakupy { get; set; } = new List<Zakup>();
-        public List<Rezerwacja> Rezerwacje { get; set; } = new List<Rezerwacja>();
+        public List<TypPomieszczenia> typyPomieszczenia { get; set; } = new List<TypPomieszczenia>();
+        public string name { get; set; }
+        public string adres { get; set; }
+        public int area { get; set; }
+        public List<string> mashineryNames { get; set; } = new List<string>();
+        public List<Magazynier> magazynierzy { get; set; } = new List<Magazynier>();
+        public List<Sprzedawca> sprzedawcy { get; set; } = new List<Sprzedawca>();
+        public List<Naprawa> naprawy { get; set; } = new List<Naprawa>();
+        public List<Towar> towary { get; set; } = new List<Towar>();
+        public List<PracownikTechniczny> pracownicyTechniczni { get; set; } = new List<PracownikTechniczny>();
+        public List<Zakup> zakupy { get; set; } = new List<Zakup>();
+        public List<Rezerwacja> rezerwacje { get; set; } = new List<Rezerwacja>();
 
         
         public MagazynSklep()
@@ -41,75 +34,75 @@ namespace EsolutionSystems.Items
             
         }
 
-        public MagazynSklep(string Name, string Adres, int Area, List<string> MashineryNames, TypPomieszczenia typPomieszczenia)
+        public MagazynSklep(string name, string adres, int area, List<string> mashineryNames, TypPomieszczenia typPomieszczenia)
         {
-            this.Name = Name;
-            this.Adres = Adres;
-            this.Area = Area;
-            this.MashineryNames = MashineryNames;
-            this.TypyPomieszczenia.Add(typPomieszczenia);
+            this.name = name;
+            this.adres = adres;
+            this.area = area;
+            this.mashineryNames = mashineryNames;
+            this.typyPomieszczenia.Add(typPomieszczenia);
             magazynySklepy.Add(this);
         }
 
-        public void AddMagazynier(Magazynier Magazynier)
+        public void AddMagazynier(Magazynier magazynier)
         {
-            if (!Magazynierzy.Contains(Magazynier))
+            if (!magazynierzy.Contains(magazynier))
             {
-                Magazynierzy.Add(Magazynier);
-                Magazynier.WorkingPlace = this;
+                magazynierzy.Add(magazynier);
+                magazynier.workingplace = this;
             }
         }
-        public void AddSprzedawca(Sprzedawca Sprzedawca)
+        public void AddSprzedawca(Sprzedawca sprzedawca)
         {
-            if (!Sprzedawcy.Contains(Sprzedawca))
+            if (!sprzedawcy.Contains(sprzedawca))
             {
-                Sprzedawcy.Add(Sprzedawca);
-                Sprzedawca.WorkingPlace = this;
-            }
-        }
-
-        public void AddPracownikTechniczny(PracownikTechniczny PracownikTechniczny)
-        {
-            if (!PracownicyTechniczni.Contains(PracownikTechniczny))
-            {
-                PracownicyTechniczni.Add(PracownikTechniczny);
-                PracownikTechniczny.WorkingPlace = this;
+                sprzedawcy.Add(sprzedawca);
+                sprzedawca.workingplace = this;
             }
         }
 
-        public void AddNaprawa(Naprawa Naprawa)
+        public void AddPracownikTechniczny(PracownikTechniczny pracownikTechniczny)
         {
-            if (!Naprawy.Contains(Naprawa))
+            if (!pracownicyTechniczni.Contains(pracownikTechniczny))
             {
-                Naprawy.Add(Naprawa);
-                Naprawa.Place = this;
+                pracownicyTechniczni.Add(pracownikTechniczny);
+                pracownikTechniczny.workingplace = this;
             }
         }
 
-        public void AddTowar(Towar Towar)
+        public void AddNaprawa(Naprawa naprawa)
         {
-            if (!Towary.Contains(Towar))
+            if (!naprawy.Contains(naprawa))
             {
-                Towary.Add(Towar);
-                Towar.AddPlace(this);
+                naprawy.Add(naprawa);
+                naprawa.place = this;
             }
         }
 
-        public void AddZakup(Zakup Zakup)
+        public void AddTowar(Towar towar)
         {
-            if (!Zakupy.Contains(Zakup))
+            if (!towary.Contains(towar))
             {
-                Zakupy.Add(Zakup);
-                Zakup.Place = this;
+                towary.Add(towar);
+                towar.Addplace(this);
             }
         }
 
-        public void AddRezerwacja(Rezerwacja Rezerwacja)
+        public void AddZakup(Zakup zakup)
         {
-            if (!Rezerwacje.Contains(Rezerwacja))
+            if (!zakupy.Contains(zakup))
             {
-                Rezerwacje.Add(Rezerwacja);
-                Rezerwacja.Place = this;
+                zakupy.Add(zakup);
+                zakup.place = this;
+            }
+        }
+
+        public void AddRezerwacja(Rezerwacja rezerwacja)
+        {
+            if (!rezerwacje.Contains(rezerwacja))
+            {
+                rezerwacje.Add(rezerwacja);
+                rezerwacja.place = this;
             }
         }
 
@@ -127,11 +120,11 @@ namespace EsolutionSystems.Items
                 {
                     formatter.Serialize(stream, magazynySklepy);
                 }
-                Console.WriteLine("Data saved successfully.");
+                Debug.WriteLine("Data saved successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving data: {ex.Message}");
+                Debug.WriteLine($"Error saving data: {ex.Message}");
             }
         }
 
@@ -152,16 +145,16 @@ namespace EsolutionSystems.Items
                     {
                         loadedData = (List<MagazynSklep>)formatter.Deserialize(stream);
                     }
-                    Console.WriteLine("Data loaded successfully.");
+                    Debug.WriteLine("Data loaded successfully.");
                 }
                 else
                 {
-                    Console.WriteLine("File not found. No data loaded.");
+                    Debug.WriteLine("File not found. No data loaded.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading data: {ex.Message}");
+                Debug.WriteLine($"Error loading data: {ex.Message}");
             }
             return loadedData;
         }

@@ -1,14 +1,5 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
@@ -17,7 +8,6 @@ namespace EsolutionSystems
         public Towar towar { set; get; }
         Rezerwacja rezerwacja { set; get; }
 
-        public Klient klient { set; get; }
         MainView mainView { set; get; }
         public RezerwacjaView(Rezerwacja rezerwacja)
         {
@@ -29,10 +19,10 @@ namespace EsolutionSystems
 
         public void UpdateRezerwacjaInfo()
         {
-            nrRezerwacjiTextBox.Text = rezerwacja.ReserwacjaId + "";
+            nrRezerwacjiTextBox.Text = rezerwacja.reserwacjaId + "";
             nrRezerwacjiTextBox.ReadOnly = true;
 
-            towarTextBox.Text = rezerwacja.Towar.Name;
+            towarTextBox.Text = rezerwacja.towar.name;
             towarTextBox.ReadOnly = true;
         }
 
@@ -56,9 +46,9 @@ namespace EsolutionSystems
                     int year = int.Parse(data[2]);
 
 
-                    rezerwacja.DataOdbioru = new DateTime(year, month, day);
+                    rezerwacja.dataOdbioru = new DateTime(year, month, day);
                     rezerwacja.status = Rezerwacja.Status.NIE_OPLACONA;
-                    new RezerwacjaConfirmationView(rezerwacja).Show();
+                    new RezerwacjaConfirmationView(rezerwacja, this).Show();
                     this.Hide();
 
 
@@ -81,9 +71,10 @@ namespace EsolutionSystems
 
         private void CancellRezerwacjaButton_Click(object sender, EventArgs e)
         {
+            rezerwacja.towar.quantity++;
             Rezerwacja.rezerwacje.Remove(rezerwacja);
-            mainView.selectedSklep.Rezerwacje.Remove(rezerwacja);
-            mainView.logInKlient.Rezerwacje.Remove(rezerwacja);
+            mainView.selectedSklep.rezerwacje.Remove(rezerwacja);
+            mainView.logInKlient.rezerwacje.Remove(rezerwacja);
             this.Hide();
         }
     }

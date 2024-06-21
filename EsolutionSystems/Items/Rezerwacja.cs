@@ -1,10 +1,6 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
+using System.Diagnostics;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace EsolutionSystems.Items
 {
@@ -21,51 +17,47 @@ namespace EsolutionSystems.Items
             ODEBRANO
         }
         public Status status { get; set; } = Status.W_TRAKCIE_TWORZENIA;
-        public DateTime DataOdbioru { get; set; }
-        public int ReserwacjaId { get; set; }
-        public Towar Towar { get; set; }
-        public MagazynSklep Place { get; set; }
-        public Klient Klient { get; set; }
+        public DateTime dataOdbioru { get; set; }
+        public int reserwacjaId { get; set; }
+        public Towar towar { get; set; }
+        public MagazynSklep place { get; set; }
+        public Klient klient { get; set; }
 
-        private Dostawa Delivery;
+        public Dostawa dostawa { set; get; }
 
 
 
-        public Rezerwacja(Towar Towar, MagazynSklep Place, Klient Klient)
+        public Rezerwacja(Towar towar, MagazynSklep place, Klient klient)
         {
-            this.DataOdbioru = DataOdbioru;
-            this.ReserwacjaId = GetHighestRezerwacjaNumber() + 1;
-            this.Towar = Towar;
-            this.Place = Place;
-            this.Klient = Klient;
-            Place.AddRezerwacja(this);
-            Klient.AddRezerwacja(this);
+            this.dataOdbioru = dataOdbioru;
+            this.reserwacjaId = GetId();
+            this.towar = towar;
+            this.place = place;
+            this.klient = klient;
+            place.AddRezerwacja(this);
+            klient.AddRezerwacja(this);
             rezerwacje.Add(this);
         }
 
         public void addDostawa(string Adres)
         {
-            Delivery = new Dostawa(Adres);
+            dostawa = new Dostawa(Adres);
         }
 
-        private class Dostawa
+        [Serializable]
+        public class Dostawa
         {
-            private string Adres { get; set; }
+            public string Adres { get; set; }
 
-            public Dostawa(string Adres)
+            internal Dostawa(string Adres)
             {
                 this.Adres = Adres;
             }
         }
 
-        public int GetHighestRezerwacjaNumber()
+        public int GetId()
         {
-            if (rezerwacje.Count() == 0)
-            {
-                return 0;
-            }
-
-            return rezerwacje.OrderByDescending(p => p.ReserwacjaId).FirstOrDefault().ReserwacjaId;
+            return rezerwacje.Count + 1;
         }
 
         public static void Save()
@@ -73,7 +65,7 @@ namespace EsolutionSystems.Items
             try
             {
                 string solutionDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = Path.Combine(solutionDir, "rezerwacje.dat");
+                string filePath = Path.Combine(solutionDir, "Rezerwacje.dat");
 
 #pragma warning disable SYSLIB0011 // Type or member is obsolete
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -82,11 +74,11 @@ namespace EsolutionSystems.Items
                 {
                     formatter.Serialize(stream, rezerwacje);
                 }
-                Console.WriteLine("Data saved successfully.");
+                Debug.WriteLine("Data saved successfully.");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error saving data: {ex.Message}");
+                Debug.WriteLine($"Error saving data: {ex.Message}");
             }
         }
 
@@ -96,7 +88,7 @@ namespace EsolutionSystems.Items
             try
             {
                 string solutionDir = AppDomain.CurrentDomain.BaseDirectory;
-                string filePath = Path.Combine(solutionDir, "rezerwacje.dat");
+                string filePath = Path.Combine(solutionDir, "Rezerwacje.dat");
 
                 if (File.Exists(filePath))
                 {
@@ -107,16 +99,16 @@ namespace EsolutionSystems.Items
                     {
                         loadedData = (List<Rezerwacja>)formatter.Deserialize(stream);
                     }
-                    Console.WriteLine("Data loaded successfully.");
+                    Debug.WriteLine("Data loaded successfully.");
                 }
                 else
                 {
-                    Console.WriteLine("File not found. No data loaded.");
+                    Debug.WriteLine("File not found. No data loaded.");
                 }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error loading data: {ex.Message}");
+                Debug.WriteLine($"Error loading data: {ex.Message}");
             }
             return loadedData;
         }

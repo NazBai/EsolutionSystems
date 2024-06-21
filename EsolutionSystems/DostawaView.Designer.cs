@@ -70,6 +70,7 @@
             DostawaCancelButton.TabIndex = 4;
             DostawaCancelButton.Text = "Powrót";
             DostawaCancelButton.UseVisualStyleBackColor = true;
+            DostawaCancelButton.Click += DostawaCancelButton_Click;
             // 
             // adresTextBox
             // 
@@ -106,6 +107,7 @@
             Controls.Add(panel1);
             Name = "DostawaView";
             Text = "DostawaView";
+            Load += DostawaView_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

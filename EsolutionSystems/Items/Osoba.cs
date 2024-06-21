@@ -1,36 +1,31 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+﻿
 namespace EsolutionSystems.Items
 {
     [Serializable]
     public abstract class Osoba
     {
 
-        public string Name { get; set; }
-        public string Surname { get; set; }
-        public DateTime DateOfBirth { get; set; }
-        public string PhoneNumber { get; set; }
-        public string Sex { get; set; }
+        public string name { get; set; }
+        public string surname { get; set; }
+        public DateTime dateOfBirth { get; set; }
+        public string phoneNumber { get; set; }
+        public string sex { get; set; }
 
         protected Osoba(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, string Sex)
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            this.DateOfBirth = DateOfBirth;
-            this.PhoneNumber = PhoneNumber;
-            this.Sex = Sex;
+            this.name = Name;
+            this.surname = Surname;
+            this.dateOfBirth = DateOfBirth;
+            this.phoneNumber = PhoneNumber;
+            this.sex = Sex;
         }
 
         protected Osoba(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber)
         {
-            this.Name = Name;
-            this.Surname = Surname;
-            this.DateOfBirth = DateOfBirth;
-            this.PhoneNumber = PhoneNumber;
+            this.name = Name;
+            this.surname = Surname;
+            this.dateOfBirth = DateOfBirth;
+            this.phoneNumber = PhoneNumber;
         }
 
         public abstract int GetAge();

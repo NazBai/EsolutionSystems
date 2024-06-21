@@ -1,24 +1,17 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
     public partial class PaymentView : Form
     {
         public Rezerwacja rezerwacja;
-        public PaymentView(Rezerwacja rezerwacja)
+        private PaymantDialogView paymantDialogView;
+        public PaymentView(Rezerwacja rezerwacja, PaymantDialogView paymantDialogView)
         {
             this.rezerwacja = rezerwacja;
             InitializeComponent();
+            this.paymantDialogView = paymantDialogView;
         }
 
         private void PaymentOkButton_Click(object sender, EventArgs e)
@@ -32,11 +25,24 @@ namespace EsolutionSystems
                 MessageBox.Show("Dane rezerwacji zostały zapisane pomyślnie", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 rezerwacja.status = Rezerwacja.Status.OPLACONA;
                 this.Hide();
+
+                Klient.Save();
             }
             else
             {
                 MessageBox.Show("Niepoprawne dane do transakcji, spróbój ponownie", "Błąd transakcji", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void PaymentCancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            paymantDialogView.Show();
+        }
+
+        private void PaymentView_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }

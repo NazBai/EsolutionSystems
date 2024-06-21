@@ -88,6 +88,7 @@
             PaymentCancelButton.TabIndex = 5;
             PaymentCancelButton.Text = "Powrót";
             PaymentCancelButton.UseVisualStyleBackColor = true;
+            PaymentCancelButton.Click += PaymentCancelButton_Click;
             // 
             // PaymentOkButton
             // 
@@ -147,6 +148,7 @@
             Controls.Add(panel1);
             Name = "PaymentView";
             Text = "PaymentView";
+            Load += PaymentView_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
             ResumeLayout(false);

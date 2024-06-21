@@ -1,21 +1,12 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
     public partial class LogInView : Form
     {
-        Label nameLabel;
-        Label zalogowanyLabel;
-        MainView mainView;
+        private Label nameLabel;
+        private Label zalogowanyLabel;
+        private MainView mainView;
         public LogInView(Label nameLabel, Label zalogowanyLabel, MainView mainView)
         {
             this.nameLabel = nameLabel;
@@ -34,9 +25,9 @@ namespace EsolutionSystems
             bool logInSucces = false;
             if (hasloTexBox.Text.Length > 0 && loginTextBox.Text.Length > 0)
             {
-                foreach (Klient klient in Klient.AllKlients)
+                foreach (Klient klient in Klient.allKlients)
                 {
-                    if (klient.Name == loginTextBox.Text)
+                    if (klient.name == loginTextBox.Text)
                     {
                         mainView.logInKlient = klient;
                         zalogowanyLabel.Text = "Zalogowany: ";

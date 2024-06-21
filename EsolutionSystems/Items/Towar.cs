@@ -1,9 +1,4 @@
-﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
@@ -11,33 +6,32 @@ namespace EsolutionSystems.Items
     public class Towar
     {
         public static List<Towar> towary { set; get; } = new List<Towar>();
-        public string Name { get; set; }
-        public int Quantity { get; set; }
-        public string Description { get; set; }
-        public int Price { get; set; }
-        [JsonIgnore]
-        public List<MagazynSklep> Places { get; set; } = new List<MagazynSklep>();
+        public string name { get; set; }
+        public int quantity { get; set; }
+        public string description { get; set; }
+        public int price { get; set; }
+        public List<MagazynSklep> places { get; set; } = new List<MagazynSklep>();
 
         public Towar()
         {
             
         }
 
-        public Towar(string Name, int Quantity, string Description, MagazynSklep Place, int Price)
+        public Towar(string name, int quantity, string description, MagazynSklep place, int price)
         {
-            this.Name = Name;
-            this.Quantity = Quantity;
-            this.Description = Description;
-            this.Price = Price;
-            AddPlace(Place);
+            this.name = name;
+            this.quantity = quantity;
+            this.description = description;
+            this.price = price;
+            Addplace(place);
         }
 
-        public void AddPlace(MagazynSklep Place)
+        public void Addplace(MagazynSklep place)
         {
-            if (!Places.Contains(Place))
+            if (!places.Contains(place))
             {
-                Places.Add(Place);
-                Place.AddTowar(this);
+                places.Add(place);
+                place.AddTowar(this);
             }
         }
 

@@ -1,32 +1,37 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
     public partial class PaymantDialogView : Form
     {
-        public Rezerwacja rezerwacja;
-        public PaymantDialogView(Rezerwacja rezerwacja)
+        private Rezerwacja rezerwacja;
+        private Form callingForm;
+        public PaymantDialogView(Rezerwacja rezerwacja, Form callingForm)
         {
+            this.callingForm = callingForm;
             this.rezerwacja = rezerwacja;
             InitializeComponent();
         }
 
         private void YesPaymentButton_Click(object sender, EventArgs e)
         {
-            new PaymantDialogView(rezerwacja);
+            new PaymentView(rezerwacja, this).Show();
+            this.Hide();
         }
 
         private void NoPaymentButton_Click(object sender, EventArgs e)
         {
+            MessageBox.Show("Dane rezerwacji zostały zapisane pomyślnie", "Sukces", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+
+            Klient.Save();
+            this.Hide();
+        }
+
+        private void PowrotButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            callingForm.Show();
 
         }
     }

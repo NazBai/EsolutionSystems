@@ -1,34 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
     [Serializable]
     public class Zakup
     {
-        public List<Towar> Towary { get; set; }
-        public MagazynSklep Place { get; set; }
-        public Klient Klient { get; set; }
+        public List<Towar> towary { get; set; }
+        public MagazynSklep place { get; set; }
+        public Klient klient { get; set; }
 
-        public Zakup(List<Towar> Towary, Klient Klient, MagazynSklep Place)
+        public Zakup(List<Towar> towary, Klient klient, MagazynSklep place)
         {
-            this.Klient = Klient;
-            this.Place = Place;
-            this.Towary = Towary;
-            Klient.AddZakup(this);
-            Place.AddZakup(this);
+            this.klient = klient;
+            this.place = place;
+            this.towary = towary;
+            klient.AddZakup(this);
+            place.AddZakup(this);
         }
 
         public int GetPrice()
         {
             int price = 0;
 
-            foreach (var item in Towary)
+            foreach (var item in towary)
             {
-                price += item.Price;
+                price += item.price;
             }
 
             return price;

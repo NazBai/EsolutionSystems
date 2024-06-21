@@ -1,21 +1,14 @@
 ﻿using EsolutionSystems.Items;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace EsolutionSystems
 {
     public partial class RezerwacjaConfirmationView : Form
     {
         public Rezerwacja rezerwacja;
-        public RezerwacjaConfirmationView(Rezerwacja rezerwacja)
+        private RezerwacjaView rezerwacjaView;
+        public RezerwacjaConfirmationView(Rezerwacja rezerwacja, RezerwacjaView rezerwacjaView)
         {
+            this.rezerwacjaView = rezerwacjaView;
             this.rezerwacja = rezerwacja;
             InitializeComponent();
             UpdateViewData();
@@ -23,11 +16,11 @@ namespace EsolutionSystems
 
         public void UpdateViewData()
         {
-            rezervationNumberLabel.Text = rezerwacja.ReserwacjaId + "";
-            towarTexBox.Text = rezerwacja.Towar.Name;
+            rezervationNumberLabel.Text = rezerwacja.reserwacjaId + "";
+            towarTexBox.Text = rezerwacja.towar.name;
             towarTexBox.ReadOnly = true;
-            priceTexBox.Text = rezerwacja.Towar.Price + "";
-            dateTexBox.Text = rezerwacja.DataOdbioru.ToString();
+            priceTexBox.Text = rezerwacja.towar.price + "";
+            dateTexBox.Text = rezerwacja.dataOdbioru.ToString();
 
         }
 
@@ -40,14 +33,20 @@ namespace EsolutionSystems
         {
             if (RadioButtons.Controls[0] is RadioButton radioButton && radioButton.Checked)
             {
-                new DostawaView(rezerwacja).Show();
+                new DostawaView(rezerwacja, this).Show();
             }
             else
             {
-                new PaymantDialogView(rezerwacja).Show();
+                new PaymantDialogView(rezerwacja, this).Show();
             }
 
             this.Hide();
+        }
+
+        private void RezerwacjaConfirmationCancelButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            rezerwacjaView.Show();
         }
     }
 }

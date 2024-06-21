@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
@@ -10,21 +6,21 @@ namespace EsolutionSystems.Items
     public class Naprawa
     {
 
-        public string NameOfDevice { get; set; }
+        public string nameOfDevice { get; set; }
         public int Price { get; set; }
         public int NumberOfDaysToEnd { get; set; }
         public List<PracownikTechniczny> PracownicyTechniczni { get; set; }
         public Klient Klient { get; }
-        public MagazynSklep Place { get; set; }
+        public MagazynSklep place { get; set; }
 
-        public Naprawa(string NameOfDevice, int Price, int NumberOfDaysToEnd, Klient Klient, MagazynSklep Place)
+        public Naprawa(string nameOfDevice, int price, int numberOfDaysToEnd, Klient klient, MagazynSklep place)
         {
-            this.NameOfDevice = NameOfDevice;
-            this.Price = Price;
-            this.NumberOfDaysToEnd = NumberOfDaysToEnd;
-            this.Klient = Klient;
-            this.Place = Place;
-            Place.AddNaprawa(this);
+            this.nameOfDevice = nameOfDevice;
+            this.Price = price;
+            this.NumberOfDaysToEnd = numberOfDaysToEnd;
+            this.Klient = klient;
+            this.place = place;
+            place.AddNaprawa(this);
         }
 
         public void AddPracownikTechniczny(PracownikTechniczny PracownikTechniczny)

@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
@@ -15,31 +11,31 @@ namespace EsolutionSystems.Items
             POW_ETATU
         };
 
-        public FormaZatrudnienia ContractType { get; set; }
-        public MagazynSklep WorkingPlace { get; set; }
+        public FormaZatrudnienia contractType { get; set; }
+        public MagazynSklep workingplace { get; set; }
 
 
-        public Sprzedawca(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, string Sex, int Salary, int YearsOfYearsOfExpiriance, FormaZatrudnienia ContractType, MagazynSklep WorkingPlace) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber, Sex, Salary, YearsOfYearsOfExpiriance)
+        public Sprzedawca(string name, string surname, DateTime dateOfBirth, string phoneNumber, string sex, int salary, int yearsOfYearsOfExpiriance, FormaZatrudnienia contractType, MagazynSklep workingplace) 
+            : base(name, surname, dateOfBirth, phoneNumber, sex, salary, yearsOfYearsOfExpiriance)
         {
-            this.WorkingPlace = WorkingPlace;
-            this.ContractType = ContractType;
+            this.workingplace = workingplace;
+            this.contractType = contractType;
         }
 
-        public Sprzedawca(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, int Salary, int YearsOfYearsOfExpiriance, FormaZatrudnienia ContractType, MagazynSklep WorkingPlace) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber, Salary, YearsOfYearsOfExpiriance)
+        public Sprzedawca(string name, string surname, DateTime dateOfBirth, string phoneNumber, int salary, int yearsOfYearsOfExpiriance, FormaZatrudnienia contractType, MagazynSklep workingplace) 
+            : base(name, surname, dateOfBirth, phoneNumber, salary, yearsOfYearsOfExpiriance)
         {
-            this.WorkingPlace = WorkingPlace;
-            this.ContractType = ContractType;
+            this.workingplace = workingplace;
+            this.contractType = contractType;
         }
 
         public override int GetAge()
         {
 
             DateTime today = DateTime.Today;
-            int age = today.Year - DateOfBirth.Year;
+            int age = today.Year - dateOfBirth.Year;
 
-            if (DateOfBirth.Date > today.AddYears(-age))
+            if (dateOfBirth.Date > today.AddYears(-age))
                 age--;
 
             return age;
@@ -48,7 +44,7 @@ namespace EsolutionSystems.Items
 
         public override bool IsExpiriensed()
         {
-            return YearsOfExpiriance >= 3;
+            return yearsOfExpiriance >= 3;
         }
 
         public class Uprawnienia

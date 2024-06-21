@@ -72,6 +72,7 @@
             nameLable.TabIndex = 9;
             nameLable.Text = "Zalogowano";
             nameLable.TextChanged += nameLable_TextChanged;
+            nameLable.Click += nameLable_Click;
             // 
             // zalogowanyLable
             // 
@@ -175,6 +176,7 @@
             Controls.Add(panel1);
             Name = "MainView";
             Text = "E-Solution Systems";
+            FormClosing += MainView_FormClosing_1;
             Load += MainView_Load;
             panel1.ResumeLayout(false);
             panel1.PerformLayout();

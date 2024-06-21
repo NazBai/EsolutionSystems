@@ -5,52 +5,44 @@ namespace EsolutionSystems
 {
     public partial class MainView : Form
     {
-        bool isZalogowany = false;
-        public List<MagazynSklep> magazyny = new List<MagazynSklep>();
-        public List<Klient> klienci = new List<Klient>();
+        public bool isZalogowany = false;
         public MagazynSklep selectedSklep = new MagazynSklep();
         public Towar selectedTowar = new Towar();
-        public LogInView logInView;
-        public RezerwacjaView rezerwacjaView { get; set; }
+
         public Klient logInKlient { get; set; }
-        Rezerwacja rezerwacja { get; set; }
+        public Rezerwacja rezerwacja { get; set; }
         public bool inReserwationProcess { get; set; } = false;
         public MainView()
         {
-            List<string> ls = new List<string>();
-            var m1 = new MagazynSklep("Sklep 1 ", "Sobieskiego 11", 120, ls, MagazynSklep.TypPomieszczenia.Sklep);
-            var m2 = new MagazynSklep("Sklep 2", "Czerniakowska 12", 121, ls, MagazynSklep.TypPomieszczenia.Sklep);
-
-            var t1 = new Towar("Telewizor", 200, "Poznaj nową przestrzeń koloru", m1, 11);
-            var t2 = new Towar("Telefon", 122, "Połącz się ze światem", m1, 1);
-            var t3 = new Towar("Pendrajw", 1121, "O niczym nie zapominaj", m1, 1);
-
-
-            var t4 = new Towar("Komputer", 12, "Otwieraj nowe możliwości", m2, 1);
-            var t5 = new Towar("Drukarka", 12, "Ciesz się realnością", m2, 1);
-            var t6 = new Towar("Konsola", 12, "Grajcie całą rodziną", m2, 1);
-
-            var k1 = new Klient("Nazar", "Bai", new DateTime(), "576615194");
-
-            //Klient.Save();
-
-            MagazynSklep.magazynySklepy = MagazynSklep.Load();
-
-
 
             
+
+            LoadAllData();
+
             InitializeComponent();
-
-            this.logInView = new LogInView(nameLable, zalogowanyLable, this);
             FillSklepyData();
+        }
 
+        private void LoadAllData()
+        {
+            Klient.allKlients = Klient.Load();
+            MagazynSklep.magazynySklepy = MagazynSklep.Load();
+            Rezerwacja.rezerwacje = Rezerwacja.Load();
+        }
+
+        private void SaveAallData()
+        {
+
+            MagazynSklep.Save();
+            Rezerwacja.Save();
+            Klient.Save();
         }
 
         public void FillSklepyData()
         {
             foreach (MagazynSklep sklep in MagazynSklep.magazynySklepy)
             {
-                Sklepy.Items.Add(sklep.Name);
+                Sklepy.Items.Add(sklep.name);
             }
         }
 
@@ -60,22 +52,24 @@ namespace EsolutionSystems
 
         private void Sklepy_SelectedIndexChanged(object sender, EventArgs e)
         {
+
             Towary.Items.Clear();
+
             if (Sklepy.SelectedItem.ToString() != null)
             {
                 string sklepName = Sklepy.SelectedItem.ToString();
 
                 foreach (MagazynSklep sklep in MagazynSklep.magazynySklepy)
                 {
-                    if (sklepName == sklep.Name)
+                    if (sklepName == sklep.name)
                     {
                         selectedSklep = sklep;
                     }
                 }
 
-                foreach (Towar towar in selectedSklep.Towary)
+                foreach (Towar towar in selectedSklep.towary)
                 {
-                    string[] row = { towar.Name, towar.Quantity.ToString(), towar.Description, towar.Price.ToString() };
+                    string[] row = { towar.name, towar.quantity.ToString(), towar.description, towar.price.ToString() };
 
                     ListViewItem item = new ListViewItem(row);
 
@@ -88,40 +82,41 @@ namespace EsolutionSystems
 
         private void Towary_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if(Towary.SelectedItems.Count > 0)
+            if (Towary.SelectedItems.Count > 0)
             {
                 string selectedTowarName = Towary.SelectedItems[0].Text;
 
-            foreach (Towar towar in selectedSklep.Towary)
-            {
-                if (selectedTowarName == towar.Name)
+                foreach (Towar towar in selectedSklep.towary)
                 {
-                    selectedTowar = towar;
+                    if (selectedTowarName == towar.name)
+                    {
+                        selectedTowar = towar;
+                    }
                 }
             }
-            }
-            
+
         }
 
         public void RezerwacjaButton_Click(object sender, EventArgs e)
         {
-            if (isZalogowany)
+            if (isZalogowany && Sklepy.SelectedItem != null)
             {
+                selectedTowar.quantity--;
                 rezerwacja = new Rezerwacja(selectedTowar, selectedSklep, logInKlient);
-                this.rezerwacjaView = new RezerwacjaView(rezerwacja);
-                rezerwacjaView.Show();
+                new RezerwacjaView(rezerwacja).Show();
+                
             }
             else
             {
                 inReserwationProcess = true;
-                logInView.Show();
+                new LogInView(nameLable, zalogowanyLable, this).Show();
             }
 
         }
 
         private void LogInButton_Click(object sender, EventArgs e)
         {
-            logInView.Show();
+            new LogInView(nameLable, zalogowanyLable, this).Show();
         }
 
         private void label3_Click(object sender, EventArgs e)
@@ -134,11 +129,25 @@ namespace EsolutionSystems
             isZalogowany = true;
         }
 
-        private void MainView_FormClosing(object sender, FormClosingEventArgs e)
+        
+
+        private void nameLable_Click(object sender, EventArgs e)
         {
-            MagazynSklep.Save();
-            Rezerwacja.Save();
-            Klient.Save();
+            if (nameLable.Text != "Zalogowano")
+            {
+                new RezerwacjeInfo(logInKlient).Show();
+            }
+        }
+
+        private void MainView_FormClosing_1(object sender, FormClosingEventArgs e)
+        {
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                System.Diagnostics.Debug.WriteLine("sawing");
+                SaveAallData();
+                this.Dispose();
+            }
         }
     }
 }

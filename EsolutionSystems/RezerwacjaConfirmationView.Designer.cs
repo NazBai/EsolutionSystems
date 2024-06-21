@@ -76,6 +76,7 @@
             RezerwacjaConfirmationCancelButton.TabIndex = 15;
             RezerwacjaConfirmationCancelButton.Text = "Powrót";
             RezerwacjaConfirmationCancelButton.UseVisualStyleBackColor = true;
+            RezerwacjaConfirmationCancelButton.Click += RezerwacjaConfirmationCancelButton_Click;
             // 
             // RezerwacjaConfirmationOKButton
             // 
@@ -158,7 +159,7 @@
             label5.Name = "label5";
             label5.Size = new Size(775, 37);
             label5.TabIndex = 4;
-            label5.Text = "Żeby zakończyć rezerwacje wybierz sposób odbioru zamówienia";
+            label5.Text = "Żeby zakończyć Rezerwacje wybierz sposób odbioru zamówienia";
             // 
             // label4
             // 

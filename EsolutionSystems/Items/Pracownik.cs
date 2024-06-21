@@ -1,30 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿
 
 namespace EsolutionSystems.Items
 {
     [Serializable]
     public abstract class Pracownik : Osoba
     {
-        public int Salary { get; set; }
-        public static int MinimalSalary { get; set; } = 5000;
-        public int YearsOfExpiriance { get; set; }
-        public int Bonus { get; set; } = 500;
-        public Pracownik(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, string Sex, int Salary, int YearsOfYearsOfExpiriance) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber, Sex)
+        public int salary { get; set; }
+        public static int minimalSalary { get; set; } = 5000;
+        public int yearsOfExpiriance { get; set; }
+        public int bonus { get; set; } = 500;
+        public Pracownik(string name, string surname, DateTime dateOfBirth, string phoneNumber, string sex, int salary, int yearsOfYearsOfExpiriance) 
+            : base(name, surname, dateOfBirth, phoneNumber, sex)
         {
-            this.Salary = Salary;
-            this.YearsOfExpiriance = YearsOfExpiriance;
+            this.salary = salary;
+            this.yearsOfExpiriance = yearsOfExpiriance;
         }
 
-        public Pracownik(string Name, string Surname, DateTime DateOfBirth, string PhoneNumber, int Salary, int YearsOfYearsOfExpiriance) 
-            : base(Name, Surname, DateOfBirth, PhoneNumber)
+        public Pracownik(string name, string surname, DateTime dateOfBirth, string phoneNumber, int salary, int yearsOfYearsOfExpiriance) 
+            : base(name, surname, dateOfBirth, phoneNumber)
         {
-            this.Salary = Salary;
-            this.YearsOfExpiriance = YearsOfExpiriance;
+            this.salary = salary;
+            this.yearsOfExpiriance = yearsOfExpiriance;
         }
 
         public abstract bool IsExpiriensed();
